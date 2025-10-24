@@ -213,10 +213,13 @@ async function evaluateReading(passageText, audioBase64, mimeType) {
         console.error('Error evaluating reading:', error);
         let errorMessage = 'Không thể phân tích bài đọc. Vui lòng thử lại.';
         if (error instanceof Error) {
-            if (error.message.includes('API key not valid')) {
+            const lowerCaseError = error.message.toLowerCase();
+            if (lowerCaseError.includes('api key not valid')) {
                 errorMessage = 'API Key không hợp lệ. Vui lòng kiểm tra lại API Key của bạn.';
-            } else if (error.message.toLowerCase().includes('permission denied') || error.message.toLowerCase().includes('api key not authorized')) {
+            } else if (lowerCaseError.includes('permission denied') || lowerCaseError.includes('api key not authorized')) {
                  errorMessage = 'Không có quyền truy cập. Rất có thể API key của bạn bị giới hạn tên miền (HTTP referrer). Vui lòng kiểm tra cài đặt API key và cho phép tên miền bạn đang dùng (ví dụ: your-username.github.io).';
+            } else if (lowerCaseError.includes('quota') || lowerCaseError.includes('429')) {
+                 errorMessage = 'Bạn đã dùng hết số lượt miễn phí trong ngày. Vui lòng thử lại vào ngày mai.';
             } else {
                  errorMessage = `Lỗi phân tích bài đọc: ${error.message}`;
             }
@@ -257,10 +260,13 @@ async function generateSpeech(text) {
         console.error('Error generating speech:', error);
         let errorMessage = 'Không thể tạo giọng đọc mẫu. Vui lòng thử lại.';
         if (error instanceof Error) {
-             if (error.message.includes('API key not valid')) {
+            const lowerCaseError = error.message.toLowerCase();
+             if (lowerCaseError.includes('api key not valid')) {
                 errorMessage = 'API Key không hợp lệ. Vui lòng kiểm tra lại API Key của bạn.';
-            } else if (error.message.toLowerCase().includes('permission denied') || error.message.toLowerCase().includes('api key not authorized')) {
+            } else if (lowerCaseError.includes('permission denied') || lowerCaseError.includes('api key not authorized')) {
                  errorMessage = 'Không có quyền truy cập. Rất có thể API key của bạn bị giới hạn tên miền (HTTP referrer). Vui lòng kiểm tra cài đặt API key và cho phép tên miền bạn đang dùng (ví dụ: your-username.github.io).';
+            } else if (lowerCaseError.includes('quota') || lowerCaseError.includes('429')) {
+                 errorMessage = 'Bạn đã dùng hết số lượt miễn phí trong ngày. Vui lòng thử lại vào ngày mai.';
             } else {
                 errorMessage = `Lỗi tạo giọng đọc mẫu: ${error.message}`;
             }
