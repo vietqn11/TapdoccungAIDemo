@@ -220,8 +220,8 @@ async function generateSpeech(text) {
         throw new Error('Vui lòng cung cấp API key trong file index.html để sử dụng tính năng AI.');
     }
     try {
-        // If the text is short (likely a single word), add a clear instruction for the AI.
-        const promptText = text.length < 20 ? `Hãy phát âm từ: ${text}` : text;
+        // Cung cấp một mệnh lệnh rõ ràng và đầy đủ ngữ cảnh để AI luôn hiểu đúng nhiệm vụ.
+        const promptText = `Vui lòng đọc to và rõ ràng đoạn văn bản sau bằng giọng Tiếng Việt chuẩn: "${text}"`;
 
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-flash-preview-tts',
@@ -248,6 +248,7 @@ async function generateSpeech(text) {
         throw new Error('Không thể tạo giọng đọc mẫu. Vui lòng thử lại.');
     }
 }
+
 
 // --- Inlined from services/sheetService.ts ---
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxaIW0K7t_0Nm5qA5_gycFydDoLWvlaItwk3obV7hjr7Hqx37luVBX7Y-SlsGbYgoRYRw/exec';
