@@ -20,14 +20,13 @@
 </head>
   <body class="bg-gray-50">
     <div id="root"></div>
-    <script>
-      // Polyfill for process.env in browser environment to prevent crash
-      if (typeof process === 'undefined') {
-        window.process = { env: { API_KEY: '' } };
-      }
-    </script>
     <script type="text/babel" data-type="module">
 // --- START OF INLINED SCRIPT ---
+
+// --- Cấu hình ---
+// QUAN TRỌNG: Vui lòng thay thế "YOUR_API_KEY_HERE" bằng API key Google AI của bạn.
+const API_KEY = "AIzaSyBL42fp-nL0cAZYDc5etd0Ga5b4I3CoG7I";
+// ----------------
 
 // --- External Imports ---
 import React, { useState, useRef, useCallback, useEffect } from 'https://esm.sh/react@18.2.0';
@@ -136,7 +135,7 @@ const READING_PASSAGES = [
 ];
 
 // --- Inlined from services/geminiService.ts ---
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 const schema = {
     type: Type.OBJECT,
@@ -171,6 +170,9 @@ const schema = {
 
 
 async function evaluateReading(passageText, audioBase64, mimeType) {
+    if (!API_KEY || API_KEY === "YOUR_API_KEY_HERE") {
+        throw new Error('Vui lòng cung cấp API key trong file index.html để sử dụng tính năng AI.');
+    }
     try {
         const prompt = `Bạn là một giám khảo chấm thi đọc Tiếng Việt cho học sinh lớp 2, yêu cầu sự chính xác và nghiêm khắc.
         Nhiệm vụ của bạn là đánh giá khả năng đọc của một học sinh dựa trên đoạn văn gốc và file ghi âm.
@@ -214,6 +216,9 @@ async function evaluateReading(passageText, audioBase64, mimeType) {
 }
 
 async function generateSpeech(text) {
+    if (!API_KEY || API_KEY === "YOUR_API_KEY_HERE") {
+        throw new Error('Vui lòng cung cấp API key trong file index.html để sử dụng tính năng AI.');
+    }
     try {
         const instructedText = `Đọc: ${text}`;
 
