@@ -12,15 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <!-- Babel for JSX and TS transpilation -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script type="importmap">
-    {
-      "imports": {
-        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-        "react": "https://esm.sh/react@18.2.0",
-        "@google/genai": "https://esm.sh/@google/genai"
-      }
-    }
-    </script>
     <style>
       body {
         font-family: 'Nunito', sans-serif;
@@ -33,9 +24,9 @@
 // --- START OF INLINED SCRIPT ---
 
 // --- External Imports ---
-import React, { useState, useRef, useCallback, useEffect } from 'react';
-import ReactDOM from 'react-dom/client';
-import { GoogleGenAI, Type, Modality } from '@google/genai';
+import React, { useState, useRef, useCallback, useEffect } from 'https://esm.sh/react@18.2.0';
+import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
+import { GoogleGenAI, Type, Modality } from 'https://esm.sh/@google/genai';
 
 // --- Inlined from types.ts ---
 // Note: TypeScript types are stripped by Babel during transpilation.
@@ -139,7 +130,7 @@ const READING_PASSAGES = [
 ];
 
 // --- Inlined from services/geminiService.ts ---
-const ai = new GoogleGenAI({ apiKey: 'AIzaSyBL42fp-nL0cAZYDc5etd0Ga5b4I3CoG7I' });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 const schema = {
     type: Type.OBJECT,
