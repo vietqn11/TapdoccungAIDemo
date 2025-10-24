@@ -220,9 +220,12 @@ async function generateSpeech(text) {
         throw new Error('Vui lòng cung cấp API key trong file index.html để sử dụng tính năng AI.');
     }
     try {
+        // If the text is short (likely a single word), add a clear instruction for the AI.
+        const promptText = text.length < 20 ? `Hãy phát âm từ: ${text}` : text;
+
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-flash-preview-tts',
-            contents: [{ parts: [{ text: text }] }],
+            contents: [{ parts: [{ text: promptText }] }],
             config: {
                 responseModalities: [Modality.AUDIO],
                 speechConfig: {
